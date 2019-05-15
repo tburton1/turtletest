@@ -1,0 +1,65 @@
+// check for Geolocation support
+if (navigator.geolocation) {
+  console.log('Geolocation is supported!');
+}
+else {
+  console.log('Geolocation is not supported for this Browser/OS version yet.');
+}
+<div id="tripmeter">
+  <p>
+    Starting Location (lat, lon):<br/>
+    <span id="startLat">???</span>°, <span id="startLon">???</span>°
+  </p>
+  <p>
+    Current Location (lat, lon):<br/>
+    <span id="currentLat">???</span>°, <span id="currentLon">???</span>°
+  </p>
+  <p>
+    Distance from starting location:<br/>
+    <span id="distance">0</span> km
+  </p>
+</div>
+
+<script language="javascript">
+//window.onload = 
+function locate() {
+  var startPos;
+  navigator.geolocation.getCurrentPosition(function(position) {
+    startPos = position;
+    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+     }, function(error) {
+    alert('Error occurred. Error code: ' + error.code);
+    // error.code can be:
+    //   0: unknown error
+    //   1: permission denied
+    //   2: position unavailable (error response from location provider)
+    //   3: timed out
+  });
+};
+
+navigator.geolocation.watchPosition(function(position) { //gets current location
+  document.getElementById('currentLat').innerHTML = position.coords.latitude;
+  document.getElementById('currentLon').innerHTML = position.coords.longitude;
+});
+
+setInterval(locate, 3000);//if you want to get location every 3 sec
+
+
+
+</script>
+<input type="file" accept="image/*" capture="environment">
+<script language="javascript">
+let formdata = new FormData();
+formdata.append("image", data);
+let xhr = new XMLHttpRequest();
+//https://kc.kobotoolbox.org/tburton
+xhr.open('POST', 'https://kc.kobotoolbox.org/tburton', true);
+xhr.onload = function () {
+    if (this.status === 200)
+        console.log(this.response);
+    else
+        console.error(xhr);
+};
+xhr.send(formdata);
+</script>
